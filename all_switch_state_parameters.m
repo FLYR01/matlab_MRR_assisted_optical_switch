@@ -364,8 +364,8 @@ lambda=lambda(1020:8300,1);
 for i=1:1:maxchannel
     i
     figure(12034+i)
-findpeaks(sum_3_off(i,1020:8300)/2^maxchannel,lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.25);
-[pks_bar(i),locs_bar(i),widths_bar(i),proms_bar(i)] = findpeaks(sum_3_off(i,1020:8300)/2^maxchannel,lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.25);
+findpeaks(sum_3_off(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.5);
+[pks_bar(i),locs_bar(i),widths_bar(i),proms_bar(i)] = findpeaks(sum_3_off(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.5);
 end
 
 
