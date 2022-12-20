@@ -335,21 +335,21 @@ for j=1:1:maxchannel
 end
 
 
-plotyy(lambda,10*log10(sum_3_on(1,:)/128),lambda,10*log10(sum_3_off(1,:)/128))
+plotyy(lambda,10*log10(sum_3_on(1,:)/2^(maxchannel-1)),lambda,10*log10(sum_3_off(1,:)/2^(maxchannel-1)))
 EX_3=zeros(8,1);
 EX_4=zeros(8,1);
 
 % Calculate the average ER of port 3 for every wavelength channel
 % switching state average
 for i=1:1:8
-EX_3(i)=10*log10(sum_3_on(i,Ith(i))/128)-10*log10(sum_3_off(i,Ith(i))/128);
+EX_3(i)=10*log10(sum_3_on(i,Ith(i))/2^(maxchannel-1))-10*log10(sum_3_off(i,Ith(i))/2^(maxchannel-1));
 end
 
 
 % Calculate the average ER of port 4 for every wavelength channel
 % switching state average
 for i=1:1:8
-EX_4(i)=10*log10(sum_4_off(i,Ith(i))/128)-10*log10(sum_4_on(i,Ith(i))/128);
+EX_4(i)=10*log10(sum_4_off(i,Ith(i))/2^(maxchannel-1))-10*log10(sum_4_on(i,Ith(i))/2^(maxchannel-1));
 end
 
 figure(12034)
@@ -364,8 +364,8 @@ lambda=lambda(1020:8300,1);
 for i=1:1:maxchannel
     i
     figure(12034+i)
-findpeaks(sum_3_off(i,1020:8300)/2^maxchannel,lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.25);
-[pks_bar(i),locs_bar(i),widths_bar(i),proms_bar(i)] = findpeaks(sum_3_off(i,1020:8300)/2^maxchannel,lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.25);
+findpeaks(sum_3_off(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.5);
+[pks_bar(i),locs_bar(i),widths_bar(i),proms_bar(i)] = findpeaks(sum_3_off(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.5);
 end
 
 
