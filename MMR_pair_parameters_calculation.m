@@ -31,15 +31,16 @@ function [delta_lambda_b0_min,delta_lambda_r0_min,FWHM,newFWHM,M,FSR]=MMR_pair_p
  neff1=neff(:,i)+delta_n0;
  neff2=neff(:,i)-delta_n0;
 % 
-% Cross state
+%Bar state 
+
 [T1]=single_mrr_accurate(a,r,L,lambda,neff1);
 [T2]=single_mrr_accurate(a,r,L,lambda,neff2);
 
 
 
-% Bar state
-[T3]=single_mrr_accurate(a,r,L,lambda,neff2);
-[T4]=single_mrr_accurate(a,r,L,lambda,neff1);
+% Cross state
+[T3]=single_mrr_accurate(a,r,L,lambda,neff(:,i));
+[T4]=single_mrr_accurate(a,r,L,lambda,neff(:,i));
 
 
 
