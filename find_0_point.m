@@ -1,7 +1,14 @@
+%find the the zero ponit of y=f(x), i.e the position of the different sign
+
 function [izero,all_x0,min_x0]=find_0_point(x,y)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%find the the zero ponit of y=f(x), i.e the position of the different sign
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% parameter annotation %%%%%%%%%%%%%%%%%%%%%%%
+% input parameters
 % NOTE: x and y are both column vector
+
+% output parameters
+% izero: the location of 0 point in array
+% all_x0: all the 0 points
+% min_x0: the minimum 0 point
 
 intervals=(y<=0)-(y>0);
 izerosup=find(diff(intervals)<0);

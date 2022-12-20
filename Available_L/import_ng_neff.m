@@ -10,6 +10,6 @@ ngfile = csvread(ng_file_name);
 nefffile= csvread(neff_file_name);
 Ng.lambda=ngfile(:,1).*(0.000001);
 Ng.ng=ngfile(:,2);
-Neff.lambda=nefffile(:,1).*(0.000001);
+Neff.lambda=nefffile(:,1).*(0.000001);% the unit of lambda is micron, here translate it to meter
 Neff.neff=nefffile(:,2)+i*nefffile(:,3);
 
