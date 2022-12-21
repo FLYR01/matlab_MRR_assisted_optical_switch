@@ -1,4 +1,4 @@
-function [pks_bar,locs_bar,widths_bar,proms_bar,EX_3,EX_4,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
+function [ERER,bottomi,peaki,FWHMi,pks_bar,locs_bar,widths_bar,proms_bar,EX_3,EX_4,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% parameter examples %%%%%%%%%%%%%%%%%%%%%%%%%
 % resolution=10000;% dispersion data resolution
 % a=0.97;% transmission coefficient
@@ -70,7 +70,7 @@ ng0(i)=ng(izero_neff0i(1),i);
 
 % % % % % % % % % % % % neff tuning to get 3*pi/2  % % % %  % % % % % % % %
 % % % % % % phase difference between up arm and bottom arm  % % % % % % % %
-resolution_neff_tuning_phase=1000;%
+resolution_neff_tuning_phase=10000;%
 neff_tuning_start_phase=0;
 neff_tuning_end_phase=0.004;
 delta=linspace(neff_tuning_start_phase,neff_tuning_end_phase,resolution_neff_tuning_phase)';
@@ -123,7 +123,7 @@ Ith(i)=izero_lambda0i
 
 % % % % % neff tuning to shift to the next wavelength channel  % % % % % %
 
-resolution_neff_tuning_lambdai=10000;%
+resolution_neff_tuning_lambdai=100000;%
 neff_tuning_start_lambdai=0;
 neff_tuning_end_lambdai=0.008;
 
@@ -306,15 +306,23 @@ sum_3_on=zeros(8,resolution);
 sum_3_off=zeros(8,resolution);
 sum_4_on=zeros(8,resolution);
 sum_4_off=zeros(8,resolution);
+peaki=zeros(2^maxchannel,maxchannel);
+FWHMi=zeros(2^maxchannel,maxchannel);
+bottomi=zeros(2^maxchannel,maxchannel);
+ERER=zeros(2^maxchannel,maxchannel);
 
 for j=1:1:maxchannel
     for k=1:1:2^maxchannel
         if (swich(k,j)=='1')
             sum_3_on(j,:)=abs(switch_state_E_out(k,:,1).^2)+sum_3_on(j,:);
+             bottomi(k,j)=abs(switch_state_E_out(k,Ith(j),1)'.^2);
         end
   
         if (swich(k,j)=='0')
-           sum_3_off(j,:)=abs(switch_state_E_out(k,:,1).^2)+sum_3_off(j,:);
+         [peaki(k,j),FWHMi(k,j)]=find_peak_parameters(lambda,abs(switch_state_E_out(k,:,1)'.^2),lambda(Ith(j)));
+           sum_3_off(j,:)=abs(switch_state_E_out(k,:,1).^2)+sum_3_off(j,:);%ÓÐ·åÖµ
+           
+           
         end
     end
 
@@ -323,12 +331,13 @@ end
 
 for j=1:1:maxchannel
     for k=1:1:2^maxchannel
-        if (swich(k,j)=='1')
-            sum_4_on(j,:)=abs(switch_state_E_out(k,:,2).^2)+sum_4_on(j,:);
-        end
-  
-        if (swich(k,j)=='0')
-           sum_4_off(j,:)=abs(switch_state_E_out(k,:,2).^2)+sum_4_off(j,:);
+       if (swich(k,j)=='0')
+           k_binary=dec2bin(k-1,maxchannel)
+           k_binary(j)='1';
+           bin2dec(k_binary)
+           ERER(k,j)=peaki(k,j)/bottomi( bin2dec(k_binary)+1,j);
+          
+      
         end
     end
 
