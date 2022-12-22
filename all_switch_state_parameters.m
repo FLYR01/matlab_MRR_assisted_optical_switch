@@ -1,4 +1,4 @@
-function [pks_bar,locs_bar,widths_bar,proms_bar,EX_3,EX_4,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
+function [ ERER,bottomi,peaki,FWHMi,pks_bar,locs_bar,widths_bar,proms_bar,EX_3,EX_4,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% parameter examples %%%%%%%%%%%%%%%%%%%%%%%%%
 % resolution=10000;% dispersion data resolution
 % a=0.97;% transmission coefficient
@@ -299,26 +299,49 @@ set(ax(2),'ycolor','r','fontsize',14)
   end
 
 
-%%%%%%%%%%%%%%%%%%% Calculate the average ER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
-
+%%%%%%%%%%% Calculate the ER for every wavelength channel %%%%%%%%%%%%%%%%%   
 
 sum_3_on=zeros(8,resolution);
 sum_3_off=zeros(8,resolution);
 sum_4_on=zeros(8,resolution);
 sum_4_off=zeros(8,resolution);
+peaki=zeros(2^maxchannel,maxchannel);
+FWHMi=zeros(2^maxchannel,maxchannel);
+bottomi=zeros(2^maxchannel,maxchannel);
+ERER=zeros(2^maxchannel,maxchannel);
 
 for j=1:1:maxchannel
     for k=1:1:2^maxchannel
         if (swich(k,j)=='1')
             sum_3_on(j,:)=abs(switch_state_E_out(k,:,1).^2)+sum_3_on(j,:);
+             [peaki(k,j),FWHMi(k,j)]=find_peak_parameters(lambda,abs(switch_state_E_out(k,:,1)'.^2),lambda(Ith(j)));
         end
   
         if (swich(k,j)=='0')
+         
            sum_3_off(j,:)=abs(switch_state_E_out(k,:,1).^2)+sum_3_off(j,:);
+           bottomi(k,j)=abs(switch_state_E_out(k,Ith(j),1)'.^2);
+           
         end
     end
 
 end
+
+
+for j=1:1:maxchannel
+    for k=1:1:2^maxchannel
+       if (swich(k,j)=='1')
+           
+           k_binary=dec2bin(k-1,maxchannel)
+           k_binary(j)='0';
+           bin2dec(k_binary)
+           ERER(k,j)=peaki(k,j)/bottomi( bin2dec(k_binary)+1,j);
+           
+        end
+    end
+
+end
+
 
 
 for j=1:1:maxchannel
