@@ -68,7 +68,7 @@ pneff(i,:) = polyfit(lambda,neff(:,i),1);
 ng(:,i)=neff(:,i)-lambda.*pneff(i,1);
 ng0(i)=ng(izero_neff0i(1),i);
 
-% % % % % % % % % % % % neff tuning to get 3*pi/2  % % % %  % % % % % % % %
+% % % % % % % % % % % % neff tuning to get pi % % % %  % % % % % % % % % %
 % % % % % % phase difference between up arm and bottom arm  % % % % % % % %
 resolution_neff_tuning_phase=1000;%
 neff_tuning_start_phase=0;
@@ -83,7 +83,7 @@ neffb=neff(:,i)-delta(j);
 [Tup]=single_mrr_accurate(a,r,L,lambda,neffr);
 [Tbottom]=single_mrr_accurate(a,r,L,lambda,neffb);
 
-y_phase(j)=Tup.angle(izero_lambda0i(1))-Tbottom.angle(izero_lambda0i(1))-3*pi/2;
+y_phase(j)=Tup.angle(izero_lambda0i(1))-Tbottom.angle(izero_lambda0i(1))-pi;
 
 end
 
@@ -161,7 +161,7 @@ neff0(i)=neff0(i-1)+delta_neff0i;
 neff(:,i)=neff(:,i-1)+delta_neff0i;
 [izero_neff0i,all_neff0i,neff0i]=find_0_point(lambda,neff(:,i)-neff0(i));
 
-% % % % % % % % % % % % neff tuning to get 3*pi/2  % % % %  % % % % % % % %
+% % % % % % % % % % % % neff tuning to get pi % % % % % %  % % % % % % % %
 % % % % % % phase difference between up arm and bottom arm  % % % % % % % %
 
 %fit the dispersion of effective index to calculate the group index
@@ -183,7 +183,7 @@ neffb=neff(:,i)-delta(j);
 [Tup]=single_mrr_accurate(a,r,L,lambda,neffr);
 [Tbottom]=single_mrr_accurate(a,r,L,lambda,neffb);
 
-y_phase(j)=Tup.angle(izero_lambda0i(1))-Tbottom.angle(izero_lambda0i(1))-3*pi/2;
+y_phase(j)=Tup.angle(izero_lambda0i(1))-Tbottom.angle(izero_lambda0i(1))-pi;
 
 end
 
@@ -210,8 +210,8 @@ end
 for i=1:1:maxchannel
    
     
-    [T_cross_uparm]=single_mrr_accurate (a,r,L,lambda,neff(:,i)-delta_shift(i));
-    [T_cross_bottomarm]=single_mrr_accurate (a,r,L,lambda,neff(:,i)+delta_shift(i));
+    [T_cross_uparm]=single_mrr_accurate (a,r,L,lambda,neff(:,i));
+    [T_cross_bottomarm]=single_mrr_accurate (a,r,L,lambda,neff(:,i));
     
     [T_bar_uparm]=single_mrr_accurate (a,r,L,lambda,neff(:,i)+delta_shift(i));
     [T_bar_bottomarm]=single_mrr_accurate (a,r,L,lambda,neff(:,i)-delta_shift(i));
@@ -274,7 +274,7 @@ for i=1:1:resolution  %calculate for very lambda
      MZI_matrix(:,:,i)=MZI_matrix(:,:,i)*[arm1(i),0;0,arm2(i)];
     end
    end
- E_out(i,:)=MMI_matrix*MZI_matrix(:,:,i)*[exp(1i*(pi/2)),0;0,1]*MMI_matrix*E_in(i,:)';
+ E_out(i,:)=MMI_matrix*MZI_matrix(:,:,i)*[1,0;0,1]*MMI_matrix*E_in(i,:)';
 
 end
  switch_state_E_out(k,:,:)= E_out(:,:);
@@ -364,8 +364,8 @@ lambda=lambda(1020:8300,1);
 for i=1:1:maxchannel
     i
     figure(12034+i)
-findpeaks(sum_3_off(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.5);
-[pks_bar(i),locs_bar(i),widths_bar(i),proms_bar(i)] = findpeaks(sum_3_off(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.5);
+findpeaks(sum_3_on(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.2);
+[pks_bar(i),locs_bar(i),widths_bar(i),proms_bar(i)] = findpeaks(sum_3_on(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.2);
 end
 
 
