@@ -301,7 +301,7 @@ set(ax(2),'ycolor','r','fontsize',14)
 
  for m=1:1:resolution % matrix initialization 
    MZI_matrix(:,:,m)=[1,0;0,1];
-   end
+ end
    
    swich='11111111'
 for i=1:1:resolution  %calculate for very lambda
