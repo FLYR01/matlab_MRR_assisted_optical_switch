@@ -6,8 +6,10 @@ startdelta=0.00;
 enddelta=0.025;
 aj=12;
 rk=12;
-a=linspace(0.87,0.98,aj);
-r=linspace(0.86,0.97,rk);
+a=0.98;
+r=0.86;
+% a=linspace(0.97,0.98,12);
+% r=linspace(0.85,0.97,12);
 % L=4.274761274761274e-05% L is obtained through the resonace condition of the MRR
 % L=1.825128251282513e-05% L is obtained through the resonace condition of the MRR
 % L=5.235382353823538e-05;
@@ -24,20 +26,17 @@ proms_bar=zeros(125,maxchannel);
 EX_3=zeros(125,maxchannel);
 EX_4=zeros(125,maxchannel);
 switch_state_E_out=zeros(125,resolution,2);
-ERER4=zeros(aj,rk,125);
-bottom4=zeros(aj,rk,125);
-peak4=zeros(aj,rk,125);
-FWHM4=zeros(aj,rk,125);
-
-for j=1:1:aj
-    for k=1:1:rk
-        if (a(j)>r(k))
-            for i=41:1:84
+% ERER=zeros(aj,rk,125);
+% bottom4=zeros(aj,rk,125);
+% peak4=zeros(aj,rk,125);
+% FWHM4=zeros(aj,rk,125);
+k=1;
+j=1;
+for i=41:1:41
                 I=i
                 L=all_L(i);% L is obtained through the resonace condition of the MRR
-                [ERER4(j,k,i),peak4(j,k,i),bottom4(j,k,i),FWHM4(j,k,i),switch_state_E_out(i,:,:)]=all_switch_state_parameters(resolution,a(j),r(k),L,neff_file_name,ng_file_name,maxchannel);
-            end
-
-        end
-    end
+                [ERER,peaki,bottomi,FWHMi,switch_state_E_out(i,:,:)]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel);
 end
+
+
+
