@@ -21,11 +21,7 @@ widths_bar=zeros(125,maxchannel);
 proms_bar=zeros(125,maxchannel);
 EX_3=zeros(125,maxchannel);
 EX_4=zeros(125,maxchannel);
-switch_state_E_out=zeros(125,256,10000,2);
-peaki=zeros(2^maxchannel,maxchannel);
-FWHMi=zeros(2^maxchannel,maxchannel);
-bottomi=zeros(2^maxchannel,maxchannel);
-ERER=zeros(2^maxchannel,maxchannel);
+switch_state_E_out=zeros(125,resolution,2);
 
 
 
@@ -34,7 +30,7 @@ for i=41:1:41
     I=i
 L=all_L(i);% L is obtained through the resonace condition of the MRR
 
-[ERER,bottomi,peaki,FWHMi,pks_bar(i,:),locs_bar(i,:),widths_bar(i,:),proms_bar(i,:),EX_3(i,:),EX_4(i,:),switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel);
+[peak4,FWHM4,switch_state_E_out(i,:,:)]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel);
 end
 
 
