@@ -1,4 +1,4 @@
-function [peaki,FWHMi,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
+function [ERER,peaki,bottomi,FWHMi,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% parameter examples %%%%%%%%%%%%%%%%%%%%%%%%%
 % resolution=10000;% dispersion data resolution
 % a=0.97;% transmission coefficient
@@ -257,7 +257,7 @@ switch_state_E_out=zeros(resolution,2);
    MZI_matrix(:,:,m)=[1,0;0,1];
    end
    
-   swich='11100000'
+   swich='11101111'
 for i=1:1:resolution  %calculate for very lambda
      
      
@@ -296,8 +296,56 @@ set(ax(1),'ycolor','k','fontsize',14)%
 set(ax(2),'ycolor','r','fontsize',14)
 %  FWHMi=zeros(maxchannel);
 %  peaki=zeros(maxchannel);
- 
+%    peaki=abs(switch_state_E_out(Ith(4),1)'.^2);
 [peaki,FWHMi]=find_peak_parameters(lambda,abs(switch_state_E_out(:,1).^2),lambda(Ith(4)));
+
+ for m=1:1:resolution % matrix initialization 
+   MZI_matrix(:,:,m)=[1,0;0,1];
+   end
+   
+   swich='11111111'
+for i=1:1:resolution  %calculate for very lambda
+     
+     
+   for j=1:1:maxchannel %calculate for very channel
+       
+    if (swich(j)=='1')
+     arm1(i)=sqrt(Bar_up_armT(i,j)).*exp(1i.*(Bar_up_armangleT(i,j)));
+     arm2(i)=sqrt(Bar_bottom_armT(i,j)).*exp(1i.*Bar_bottom_armangleT(i,j));
+     MZI_matrix(:,:,i)=MZI_matrix(:,:,i)*[arm1(i),0;0,arm2(i)];
+    end
+    if (swich(j)=='0')
+     arm1(i)=sqrt(Cross_up_armT(i,j)).*exp(1i.*(Cross_up_armangleT(i,j)));
+     arm2(i)=sqrt(Cross_bottom_armT(i,j)).*exp(1i.*Cross_bottom_armangleT(i,j));
+     MZI_matrix(:,:,i)=MZI_matrix(:,:,i)*[arm1(i),0;0,arm2(i)];
+    end
+   end
+ E_out(i,:)=MMI_matrix*MZI_matrix(:,:,i)*[exp(1i*(pi/2)),0;0,1]*MMI_matrix*E_in(i,:)';
+
+end
+ switch_state_E_out(:,:)= E_out(:,:);
+ 
+figure(123456782)
+% plot(lambda,10*log10(abs(switch_state_E_out(k,:,2).^2)))
+[ax, h1, h2]=plotyy(lambda,10*log10(abs(switch_state_E_out(:,1).^2)),lambda,10*log10(abs(switch_state_E_out(:,2).^2)));
+title('All in bar state','FontSize',15);
+xlabel('Wavelength [m]','FontSize',15);
+ylabel(ax(1),'Transmission [dB]','FontSize',15) % left y-axis 
+ylabel(ax(2),'Transmission [dB]','FontSize',15) % 
+legend([h1,h2],'P1-P3','P1-P4');
+set(h1,'color','k','linewidth',1);%
+
+set(h2,'color','r','linewidth',1);%
+
+set(ax(1),'ycolor','k','fontsize',14)%
+
+set(ax(2),'ycolor','r','fontsize',14)
+%  FWHMi=zeros(maxchannel);
+%  peaki=zeros(maxchannel);
+  bottomi=abs(switch_state_E_out(Ith(4),1)'.^2);
+  ERER=peaki/bottomi;
+
+
 
 % for m=1:1:resolution % matrix initialization 
 %    MZI_matrix(:,:,m)=[1,0;0,1];
