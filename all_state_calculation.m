@@ -32,7 +32,7 @@ FWHM4=zeros(aj,rk,125);
 for j=1:1:aj
     for k=1:1:rk
         if (a(j)>r(k))
-            for i=41:1:41
+            for i=41:1:84
                 I=i
                 L=all_L(i);% L is obtained through the resonace condition of the MRR
                 [ERER4(j,k,i),peak4(j,k,i),bottom4(j,k,i),FWHM4(j,k,i),switch_state_E_out(i,:,:)]=all_switch_state_parameters(resolution,a(j),r(k),L,neff_file_name,ng_file_name,maxchannel);
