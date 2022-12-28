@@ -1,4 +1,4 @@
-function [ERER,peaki,bottomi,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
+function [FWHMi,ERER,peaki,bottomi,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% parameter examples %%%%%%%%%%%%%%%%%%%%%%%%%
 % resolution=10000;% dispersion data resolution
 % a=0.97;% transmission coefficient
@@ -292,7 +292,9 @@ set(h2,'color','r','linewidth',1);%
 set(ax(1),'ycolor','k','fontsize',14)%
 
 set(ax(2),'ycolor','r','fontsize',14)
+
 peaki=abs(switch_state_E_out(Ith(4),1)'.^2);
+[~,FWHMi]=find_peak_parameters(lambda,abs(switch_state_E_out(:,1).^2),lambda(Ith(4)));
 
    swich='11101111'
    for m=1:1:resolution % matrix initialization 

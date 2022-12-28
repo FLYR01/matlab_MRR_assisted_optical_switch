@@ -14,10 +14,10 @@ Temp=[izero_0;izero_half];
 Temp=sort(Temp);
 i_0=find(Temp==izero_0); 
 FWHM=x(Temp(i_0+1))-x(Temp(i_0-1));
-end
 
+end
 if (y_0/2<=min(y))
-    FWHM=999;
+   FWHM=1000;
 end
     
 

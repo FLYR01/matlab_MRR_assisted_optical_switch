@@ -4,10 +4,10 @@ close all;
 resolution=10000;% data resolution
 startdelta=0.00;
 enddelta=0.025;
-aj=12;
-rk=12;
-a=linspace(0.87,0.98,aj);
-r=linspace(0.86,0.97,rk);
+aj=7;
+rk=7;
+a=linspace(0.92,0.98,aj);
+r=linspace(0.91,0.97,rk);
 % L=4.274761274761274e-05% L is obtained through the resonace condition of the MRR
 % L=1.825128251282513e-05% L is obtained through the resonace condition of the MRR
 % L=5.235382353823538e-05;
@@ -31,11 +31,11 @@ FWHM4=zeros(aj,rk,125);
 
 for j=1:1:aj
     for k=1:1:rk
-        if (a(j)>r(k))
+        if (a(j)-r(k)>0.00001)
             for i=41:1:84
                 I=i
                 L=all_L(i);% L is obtained through the resonace condition of the MRR
-                [ERER4(j,k,i),peak4(j,k,i),bottom4(j,k,i),switch_state_E_out(i,:,:)]=all_switch_state_parameters(resolution,a(j),r(k),L,neff_file_name,ng_file_name,maxchannel);
+                [FWHM4(j,k,i),ERER4(j,k,i),peak4(j,k,i),bottom4(j,k,i),switch_state_E_out(i,:,:)]=all_switch_state_parameters(resolution,a(j),r(k),L,neff_file_name,ng_file_name,maxchannel);
             end
 
         end
