@@ -257,7 +257,7 @@ switch_state_E_out=zeros(resolution,2);
    MZI_matrix(:,:,m)=[1,0;0,1];
    end
    
-   swich='11101111'
+   swich='01111111'
 for i=1:1:resolution  %calculate for very lambda
      
      
@@ -297,7 +297,7 @@ set(ax(2),'ycolor','r','fontsize',14)
 %  FWHMi=zeros(maxchannel);
 %  peaki=zeros(maxchannel);
 %    peaki=abs(switch_state_E_out(Ith(4),1)'.^2);
-[peaki,FWHMi]=find_peak_parameters(lambda,abs(switch_state_E_out(:,1).^2),lambda(Ith(4)));
+[peaki,FWHMi]=find_peak_parameters(lambda,abs(switch_state_E_out(:,1).^2),lambda(Ith(1)));
 
  for m=1:1:resolution % matrix initialization 
    MZI_matrix(:,:,m)=[1,0;0,1];
@@ -342,7 +342,7 @@ set(ax(1),'ycolor','k','fontsize',14)%
 set(ax(2),'ycolor','r','fontsize',14)
 %  FWHMi=zeros(maxchannel);
 %  peaki=zeros(maxchannel);
-  bottomi=abs(switch_state_E_out(Ith(4),1)'.^2);
+  bottomi=abs(switch_state_E_out(Ith(1),1)'.^2);
   ERER=peaki/bottomi;
 
 

@@ -1,7 +1,7 @@
 clear;
 clc;
 close all;
-load('sweep_a_r_L(T_FWHM_ER).mat')
+load('first_state_sweep_a_r_L(T_FWHM_ER).mat')
 [X, Y, Z] = meshgrid(a,r,all_L(41:84));
 % scatter3(a,r,all_L(41:84))
 scatter3( X(:), Y(:), Z(:) );
@@ -37,11 +37,11 @@ scatter3( X(:), Y(:), Z(:), [], U(:), 'filled' );
 colormap(jet);
 c = colorbar;
 c.Label.String = 'Elevation (ft in 1000s)';
-tt=T(:,7,:)
+tt=T(:,1,:)
 tt=squeeze(tt);
-ss=S(:,7,:)
+ss=S(:,1,:)
 ss=squeeze(ss);
-uu=U(:,7,:)
+uu=U(:,1,:)
 uu=squeeze(uu);
 
 figure(4)

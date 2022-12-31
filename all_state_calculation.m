@@ -31,7 +31,7 @@ FWHM4=zeros(aj,rk,125);
 
 for j=1:1:aj
     for k=1:1:rk
-        if (a(j)>r(k))
+        if (a(j)-r(k)>0.0001)
             for i=41:1:84
                I=i
                L=all_L(i);% L is obtained through the resonace condition of the MRR
