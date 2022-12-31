@@ -293,10 +293,10 @@ set(ax(1),'ycolor','k','fontsize',14)%
 
 set(ax(2),'ycolor','r','fontsize',14)
 
-peaki=abs(switch_state_E_out(Ith(4),1)'.^2);
-[~,FWHMi]=find_peak_parameters(lambda,abs(switch_state_E_out(:,1).^2),lambda(Ith(4)));
+peaki=abs(switch_state_E_out(Ith(1),1)'.^2);
+[~,FWHMi]=find_peak_parameters(lambda,abs(switch_state_E_out(:,1).^2),lambda(Ith(1)));
 
-   swich='11101111'
+   swich='01111111'
    for m=1:1:resolution % matrix initialization 
    MZI_matrix(:,:,m)=[1,0;0,1];
    end
@@ -337,7 +337,7 @@ set(h2,'color','r','linewidth',1);%
 set(ax(1),'ycolor','k','fontsize',14)%
 
 set(ax(2),'ycolor','r','fontsize',14)
-bottomi=abs(switch_state_E_out(Ith(4),1)'.^2);
+bottomi=abs(switch_state_E_out(Ith(1),1)'.^2);
   ERER=peaki/bottomi;
 
 

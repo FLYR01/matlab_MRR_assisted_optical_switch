@@ -1,7 +1,7 @@
 clear;
 clc;
-
-load('Sweep_a_r_L.mat')
+close all;
+load('sweep_a_r_L(first_state).mat')
 [X, Y, Z] = meshgrid(a,r,all_L(41:84));
 % scatter3(a,r,all_L(41:84))
 scatter3( X(:), Y(:), Z(:) );
@@ -37,3 +37,19 @@ scatter3( X(:), Y(:), Z(:), [], U(:), 'filled' );
 colormap(jet);
 c = colorbar;
 c.Label.String = 'Elevation (ft in 1000s)';
+tt=T(:,1,:)
+tt=squeeze(tt);
+ss=S(:,1,:)
+ss=squeeze(ss);
+uu=U(:,1,:)
+uu=squeeze(uu);
+
+figure(4)
+colormap(jet);
+surface(all_L(41:84),a,tt)
+figure(5)
+colormap(jet);
+surface(all_L(41:84),a,ss)
+figure(6)
+colormap(jet);
+surface(all_L(41:84),a,uu)
