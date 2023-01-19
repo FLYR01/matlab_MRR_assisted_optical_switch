@@ -1,4 +1,4 @@
-function [FWHMi,ERER,peaki,bottomi,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
+function [delta_lambda_b0_min,delta_lambda_r0_min,FWHM,newFWHM,FWHMi,ERER,peaki,bottomi,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% parameter examples %%%%%%%%%%%%%%%%%%%%%%%%%
 % resolution=10000;% dispersion data resolution
 % a=0.97;% transmission coefficient
@@ -279,7 +279,11 @@ end
  
 figure(123456781)
 % plot(lambda,10*log10(abs(switch_state_E_out(k,:,2).^2)))
-[ax, h1, h2]=plotyy(lambda,10*log10(abs(switch_state_E_out(:,1).^2)),lambda,10*log10(abs(switch_state_E_out(:,2).^2)));
+P13_1=abs(switch_state_E_out(:,1).^2);
+P14_1=abs(switch_state_E_out(:,2).^2);
+
+[ax, h1, h2]=plotyy(lambda,10*log10(P13_1),lambda,10*log10(P14_1));
+
 title('All in bar state','FontSize',15);
 xlabel('Wavelength [m]','FontSize',15);
 ylabel(ax(1),'Transmission [dB]','FontSize',15) % left y-axis 
@@ -324,7 +328,11 @@ end
  
 figure(123456782)
 % plot(lambda,10*log10(abs(switch_state_E_out(k,:,2).^2)))
-[ax, h1, h2]=plotyy(lambda,10*log10(abs(switch_state_E_out(:,1).^2)),lambda,10*log10(abs(switch_state_E_out(:,2).^2)));
+P13_2=abs(switch_state_E_out(:,1).^2);
+P14_2=abs(switch_state_E_out(:,2).^2);
+
+[ax, h1, h2]=plotyy(lambda,10*log10(P13_2),lambda,10*log10(P14_2));
+
 title('All in bar state','FontSize',15);
 xlabel('Wavelength [m]','FontSize',15);
 ylabel(ax(1),'Transmission [dB]','FontSize',15) % left y-axis 

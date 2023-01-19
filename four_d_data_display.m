@@ -1,7 +1,7 @@
 clear;
 clc;
 close all;
-load('a_r_L_Single.mat');
+load('a_r_L_Single_31_31.mat')
 [X, Y, Z] = meshgrid(a,r,all_L(41:84));
 % scatter3(a,r,all_L(41:84))
 scatter3( X(:), Y(:), Z(:) );
@@ -56,8 +56,8 @@ surface(r,a,tt)
 % colormap(jet);
 % surface(all_L(41:84),a,uu)
 % view(60,20)
-aaa=linspace(0.9,1,100);
-rrr=linspace(0.89,1,100)';
+aaa=linspace(0.7,1,100);
+rrr=linspace(0.7,1,100)';
 % [aaaa, LLL] = meshgrid(aaa,all_L(41:84));
 %  [aaa, rrr] = meshgrid(aaa, rrr);
 ttt=griddata(a,r,tt,aaa,rrr,'cubic');
