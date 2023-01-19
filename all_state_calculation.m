@@ -4,8 +4,8 @@ close all;
 resolution=10000;% data resolution
 startdelta=0.00;
 enddelta=0.025;
-aj=41;
-rk=41;
+aj=51;
+rk=51;
 a=linspace(0.7,1,aj);
 r=linspace(0.7,1,rk);
 % L=4.274761274761274e-05% L is obtained through the resonace condition of the MRR
