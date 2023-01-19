@@ -1,4 +1,4 @@
-function [ERER,peaki,bottomi,FWHMi,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
+function [delta_lambda_b0_min,delta_lambda_r0_min,FWHM,newFWHM,ERER,peaki,bottomi,FWHMi,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% parameter examples %%%%%%%%%%%%%%%%%%%%%%%%%
 % resolution=10000;% dispersion data resolution
 % a=0.97;% transmission coefficient
