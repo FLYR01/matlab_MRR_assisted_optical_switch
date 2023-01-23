@@ -298,7 +298,7 @@ set(ax(2),'ycolor','r','fontsize',14)
 %  peaki=zeros(maxchannel);
 %    peaki=abs(switch_state_E_out(Ith(4),1)'.^2);
 [peaki,FWHMi]=find_peak_parameters(lambda,abs(switch_state_E_out(:,1).^2),lambda(Ith(1)));
-
+peaki
  for m=1:1:resolution % matrix initialization 
    MZI_matrix(:,:,m)=[1,0;0,1];
  end
