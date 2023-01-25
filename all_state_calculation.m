@@ -43,7 +43,7 @@ for j=1:1:aj
                 j
                 k
                 L=all_L(i);% L is obtained through the resonace condition of the MRR
-                [delta_lambda_b0_min(j,k,i),delta_lambda_r0_min(j,k,i),FWHM(j,k,i),newFWHM(j,k,i),FWHM4(j,k,i),ERER4(j,k,i),peak4(j,k,i),bottom4(j,k,i),switch_state_E_out(i,:,:)]=all_switch_state_parameters(resolution,a(j),r(k),L,neff_file_name,ng_file_name,maxchannel);
+                [delta_lambda_b0_min(j,k,i),delta_lambda_r0_min(j,k,i),FWHM(j,k,i),newFWHM(j,k,i),ERER4(j,k,i),peak4(j,k,i),bottom4(j,k,i),FWHM4(j,k,i),switch_state_E_out(i,:,:)]=all_switch_state_parameters(resolution,a(j),r(k),L,neff_file_name,ng_file_name,maxchannel);
             end
 
         end

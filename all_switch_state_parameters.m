@@ -103,7 +103,7 @@ plot(lambda,(Tup.angle-Tbottom.angle)/pi);
 % % % % % % % % % % % % the target wave band % % % %  % % % % % % % % % % %
 %lambda0(1) was given in available_L.m to calculate the appropriate L
 
-lambda0=[lambda0(1);1.29780e-6;1.29893e-6;1.30005e-6;1.30118e-6;1.30231e-6;1.30345e-6;1.30458e-6];
+lambda0=[lambda0(1);1.29745e-6;1.29893e-6;1.30005e-6;1.30118e-6;1.30231e-6;1.30345e-6;1.30458e-6];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%  Calculate the rest wavelength channels %%%%%%%%%%%%%%%%%%%%%%
@@ -281,7 +281,9 @@ end
  
 figure(123456781)
 % plot(lambda,10*log10(abs(switch_state_E_out(k,:,2).^2)))
-[ax, h1, h2]=plotyy(lambda,10*log10(abs(switch_state_E_out(:,1).^2)),lambda,10*log10(abs(switch_state_E_out(:,2).^2)));
+Tbar_13=10*log10(abs(switch_state_E_out(:,1).^2));
+Tbar_14=10*log10(abs(switch_state_E_out(:,2).^2));
+[ax, h1, h2]=plotyy(lambda,Tbar_13,lambda,Tbar_14);
 title('All in bar state','FontSize',15);
 xlabel('Wavelength [m]','FontSize',15);
 ylabel(ax(1),'Transmission [dB]','FontSize',15) % left y-axis 
@@ -327,7 +329,10 @@ end
  
 figure(123456782)
 % plot(lambda,10*log10(abs(switch_state_E_out(k,:,2).^2)))
-[ax, h1, h2]=plotyy(lambda,10*log10(abs(switch_state_E_out(:,1).^2)),lambda,10*log10(abs(switch_state_E_out(:,2).^2)));
+Tcross_13=10*log10(abs(switch_state_E_out(:,1).^2));
+Tcross_14=10*log10(abs(switch_state_E_out(:,2).^2));
+
+[ax, h1, h2]=plotyy(lambda,Tcross_13,lambda,Tcross_14);
 title('All in bar state','FontSize',15);
 xlabel('Wavelength [m]','FontSize',15);
 ylabel(ax(1),'Transmission [dB]','FontSize',15) % left y-axis 
