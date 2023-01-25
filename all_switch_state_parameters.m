@@ -43,7 +43,7 @@ Ith=zeros(maxchannel,1);
 
 
 %%% interpolation for the imported Neff and Ng under the data resolution %%
-lambda=linspace(Neff.lambda(470),Neff.lambda(590),resolution)';
+lambda=linspace(Neff.lambda(550),Neff.lambda(690),resolution)';
 neff(:,1)=interp1(Neff.lambda,Neff.neff,lambda,'linear');%interpolation for the import Neff
 ng(:,1)=interp1(Ng.lambda,Ng.ng,lambda,'linear');%interpolation for the import Neff
 

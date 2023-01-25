@@ -1,5 +1,6 @@
 clc;
 clear;
+close all;
 %%%%%%%%%%%%%%%%%%%%%%%%% Import ng and neff file %%%%%%%%%%%%%%%%%%%%%%%%%
 %ng: group index
 %neff: effective index
@@ -10,27 +11,33 @@ ng_file_name='ng1000.csv';
 
 %%%%%%%%%%%%%%%%%%%%%%%%% Interpolation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-resolution_dispersion=10000;% Resolution of dispersion interpolation
-lambda=linspace(Neff.lambda(450),Neff.lambda(end),resolution_dispersion)';
+resolution_dispersion=1000000;% Resolution of dispersion interpolation
+lambda=linspace(Neff.lambda(550),Neff.lambda(end),resolution_dispersion)';
 neff(:,1)=interp1(Neff.lambda,Neff.neff,lambda,'linear');%interpolation for the import Neff
 ng(:,1)=interp1(Ng.lambda,Ng.ng,lambda,'linear');%interpolation for the import Neff
 
 %%%%%%%%%%%%%%%%%%%%%%%%% Initialization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-resolution_L=1000000;% Resolution of L
+resolution_L=10000;% Resolution of L
 L_start=10e-6;L_end=70e-6;% range of L
 L=linspace(L_start,L_end,resolution_L)';
 lambda0=zeros(1,resolution_L);
-lambda_target=1.29668e-6;
+lambda_target=1.30458e-6;
+%lambda_target=1.29668e-6;
 
 %%%%%%%%%%%%%%%%%%%%%%%%% Calculation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 for i=1:1:resolution_L
 
-y=sin(0.5.*(L(i).*neff(:,1).*(2.*pi)./lambda));%%find the resonance points
+y=sin(0.5.*(L(i).*neff(:,1).*(2.*pi)./lambda));%%find the resonance wavelength(lambda)
+% figure(3)
+% plot(lambda,y);
 [izero,all_lambda0,lambda0(i)]=find_0_point(lambda,y);
+% size(all_lambda0)
+% lanmda1(i)=all_lambda0(2);
 
 end
+
 lambda0=lambda0';
 figure(1)
 plot(L,lambda0);
