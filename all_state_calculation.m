@@ -15,9 +15,9 @@ startpoint=[0.12 0.012];
 width=400;%unit:nm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-resolution=44;
-R_vector=all_L(41:84)*1E9/(2*pi);%give the radius of microring resonator, this can be obtained by all_L/2pi
-d_vector=linspace(50,500,resolution);% give the distance between the ring and the straight waveguide.
+resolution=94;
+R_vector=all_L(11:104)*1E9/(2*pi);%give the radius of microring resonator, this can be obtained by all_L/2pi
+d_vector=linspace(50,250,resolution);% give the distance between the ring and the straight waveguide.
 R_um_vector=R_vector/1000;
 a_onetrip=zeros(resolution,1);
 r_selfcoupling=zeros(resolution,resolution);
@@ -38,8 +38,8 @@ a=a_onetrip;
 r=r_selfcoupling;
 
 
-aj=44;
-rk=44;
+aj=94;
+rk=94;
 
 
 
@@ -123,7 +123,7 @@ delta_lambda_b0_min=zeros(aj,aj);
 delta_lambda_r0_min=zeros(aj,aj);
 FWHM=zeros(aj,aj);
 newFWHM=zeros(aj,aj);
-L=all_L(41:84);
+L=all_L(11:104);
 
 for i=1:1:aj
    
