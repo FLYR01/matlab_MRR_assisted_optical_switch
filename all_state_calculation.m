@@ -116,6 +116,7 @@ EX_4=zeros(aj,maxchannel);
 switch_state_E_out=zeros(aj,resolution,2);
 ERER4=zeros(aj,aj);
 bottom4=zeros(aj,aj);
+bottom_4=zeros(aj,aj);
 peak4=zeros(aj,aj);
 FWHM4=zeros(aj,aj);
 delta_lambda_b0_min=zeros(aj,aj);
@@ -133,7 +134,7 @@ for i=1:1:aj
                 i
                 k
                 % L is obtained through the resonace condition of the MRR
-                [delta_lambda_b0_min(i,k),delta_lambda_r0_min(i,k),FWHM(i,k),newFWHM(i,k),ERER4(i,k),peak4(i,k),bottom4(i,k),FWHM4(i,k),switch_state_E_out(i,:,:)]=all_switch_state_parameters(resolution,a(i),r(i,k),L(i),neff_file_name,ng_file_name,maxchannel);
+                [delta_lambda_b0_min(i,k),delta_lambda_r0_min(i,k),FWHM(i,k),newFWHM(i,k),ERER4(i,k),peak4(i,k),bottom4(i,k),FWHM4(i,k),switch_state_E_out(i,:,:),bottom_4(i,k)]=all_switch_state_parameters(resolution,a(i),r(i,k),L(i),neff_file_name,ng_file_name,maxchannel);
         end
 
     end

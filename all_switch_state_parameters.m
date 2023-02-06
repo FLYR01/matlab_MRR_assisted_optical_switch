@@ -1,4 +1,4 @@
-function [delta_lambda_b0_min,delta_lambda_r0_min,FWHM,newFWHM,ERER,peaki,bottomi,FWHMi,switch_state_E_out]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
+function [delta_lambda_b0_min,delta_lambda_r0_min,FWHM,newFWHM,ERER,peaki,bottomi,FWHMi,switch_state_E_out,bottom_4]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% parameter examples %%%%%%%%%%%%%%%%%%%%%%%%%
 % resolution=10000;% dispersion data resolution
 % a=0.97;% transmission coefficient
@@ -301,6 +301,10 @@ set(ax(2),'ycolor','r','fontsize',14)
 %    peaki=abs(switch_state_E_out(Ith(4),1)'.^2);
 [peaki,FWHMi]=find_peak_parameters(lambda,abs(switch_state_E_out(:,1).^2),lambda(Ith(1)));
 peaki
+bottom_4=abs(switch_state_E_out(Ith(1),2)'.^2);
+
+
+
  for m=1:1:resolution % matrix initialization 
    MZI_matrix(:,:,m)=[1,0;0,1];
  end
