@@ -5,7 +5,6 @@ close all;
 load test_ha.mat;% this file is the neff of even and odd mode
 load('available_L.mat')
 
-
 gap = lum.x0';
 gap =gap*1000000000;
 ne = lum.y0';
@@ -15,8 +14,8 @@ startpoint=[0.12 0.012];
 width=400;%unit:nm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-resolution=44;
-R_vector=all_L(41:84)*1E9/(2*pi);%give the radius of microring resonator, this can be obtained by all_L/2pi
+resolution=94;
+R_vector=all_L(11:104)*1E9/(2*pi);%give the radius of microring resonator, this can be obtained by all_L/2pi
 d_vector=linspace(50,500,resolution);% give the distance between the ring and the straight waveguide.
 R_um_vector=R_vector/1000;
 a_onetrip=zeros(resolution,1);
@@ -38,22 +37,8 @@ a=a_onetrip;
 r=r_selfcoupling;
 
 
-aj=44;
-rk=44;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+aj=94;
+rk=94;
 
 
 
@@ -116,13 +101,14 @@ EX_4=zeros(aj,maxchannel);
 switch_state_E_out=zeros(aj,resolution,2);
 ERER4=zeros(aj,aj);
 bottom4=zeros(aj,aj);
+bottom_4=zeros(aj,aj);
 peak4=zeros(aj,aj);
 FWHM4=zeros(aj,aj);
 delta_lambda_b0_min=zeros(aj,aj);
 delta_lambda_r0_min=zeros(aj,aj);
 FWHM=zeros(aj,aj);
 newFWHM=zeros(aj,aj);
-L=all_L(41:84);
+L=all_L(11:104);
 
 for i=1:1:aj
    
@@ -133,7 +119,7 @@ for i=1:1:aj
                 i
                 k
                 % L is obtained through the resonace condition of the MRR
-                [delta_lambda_b0_min(i,k),delta_lambda_r0_min(i,k),FWHM(i,k),newFWHM(i,k),ERER4(i,k),peak4(i,k),bottom4(i,k),FWHM4(i,k),switch_state_E_out(i,:,:)]=all_switch_state_parameters(resolution,a(i),r(i,k),L(i),neff_file_name,ng_file_name,maxchannel);
+                [delta_lambda_b0_min(i,k),delta_lambda_r0_min(i,k),FWHM(i,k),newFWHM(i,k),ERER4(i,k),peak4(i,k),bottom4(i,k),FWHM4(i,k),switch_state_E_out(i,:,:),bottom_4(i,k)]=all_switch_state_parameters(resolution,a(i),r(i,k),L(i),neff_file_name,ng_file_name,maxchannel);
         end
 
     end
