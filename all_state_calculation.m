@@ -30,7 +30,7 @@ for i=1:1:resolution
     
 xe=be*(R_vector(i)+width/2);
 xo=bo*(R_vector(i)+width/2);
-kappa=sin(pi/1304.58*((ae/be)*exp(-be*d_vector(j))*B(xe)+(ao/bo)*exp(-bo*d_vector(j))*B(xo)));
+kappa=sin(pi/(lambda_target*10^(9))*((ae/be)*exp(-be*d_vector(j))*B(xe)+(ao/bo)*exp(-bo*d_vector(j))*B(xo)));
 r_selfcoupling(i,j)=sqrt(1-kappa^2);
 a_onetrip(i)=give_onetrip_a(R_um_vector(i));
     end
@@ -41,19 +41,6 @@ r=r_selfcoupling;
 
 aj=116;
 rk=116;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
