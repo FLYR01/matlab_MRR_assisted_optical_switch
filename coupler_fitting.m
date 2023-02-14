@@ -1,4 +1,4 @@
-function [ae,be,ao,bo]=coupler_fitting(gap, ne,no,startpoint)
+function [ae,be,ao,bo]=coupler_fitting(gap, ne,no,startpoint,neff)
 %the unit of gap is nm
 
 ax1 = axes; 
@@ -10,7 +10,7 @@ set(ax1, 'XLim', [5e-08 5e-07])
 set(ax1, 'YLim', [2.52 2.62])
 set(ax1,'XGrid', 'on')
 set(ax1,'YGrid', 'on')
- neff=2.540772;%determined by the geometry of waveguide
+ %neff=2.540772;%determined by the geometry of waveguide
  figure(1)
 plot(gap, ne,'o')
 hold on

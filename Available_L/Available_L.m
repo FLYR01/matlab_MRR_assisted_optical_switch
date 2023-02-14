@@ -5,8 +5,8 @@ close all;
 %ng: group index
 %neff: effective index
 
-neff_file_name='neff1000.csv';
-ng_file_name='ng1000.csv';
+neff_file_name='in_model_neff_width_380.csv';
+ng_file_name='in_model_ng_width_380.csv';
 [Ng,Neff]=import_ng_neff(ng_file_name,neff_file_name);
 
 %%%%%%%%%%%%%%%%%%%%%%%%% Interpolation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
