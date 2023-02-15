@@ -19,5 +19,3 @@ end
 if (y_0/2<=min(y))
    FWHM=1000;
 end
-    
-

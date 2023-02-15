@@ -1,4 +1,4 @@
-function [delta_lambda_b0_min,delta_lambda_r0_min,FWHM,newFWHM,FWHMi,ERER,peaki,bottomi,switch_state_E_out,bottom_4]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
+function [delta_lambda_b0_min,delta_lambda_r0_min,FWHM,newFWHM,ERER,peaki,bottomi,FWHMi,switch_state_E_out,bottom_4]=all_switch_state_parameters(resolution,a,r,L,neff_file_name,ng_file_name,maxchannel)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% parameter examples %%%%%%%%%%%%%%%%%%%%%%%%%
 % resolution=10000;% dispersion data resolution
 % a=0.97;% transmission coefficient
@@ -43,7 +43,7 @@ Ith=zeros(maxchannel,1);
 
 
 %%% interpolation for the imported Neff and Ng under the data resolution %%
-lambda=linspace(Neff.lambda(550),Neff.lambda(670),resolution)';
+lambda=linspace(Neff.lambda(550),Neff.lambda(690),resolution)';
 neff(:,1)=interp1(Neff.lambda,Neff.neff,lambda,'linear');%interpolation for the import Neff
 ng(:,1)=interp1(Ng.lambda,Ng.ng,lambda,'linear');%interpolation for the import Neff
 
@@ -68,7 +68,7 @@ pneff(i,:) = polyfit(lambda,neff(:,i),1);
 ng(:,i)=neff(:,i)-lambda.*pneff(i,1);
 ng0(i)=ng(izero_neff0i(1),i);
 
-% % % % % % % % % % % % neff tuning to get pi % % % %  % % % % % % % % % %
+% % % % % % % % % % % % neff tuning to get 3*pi/2  % % % %  % % % % % % % %
 % % % % % % phase difference between up arm and bottom arm  % % % % % % % %
 resolution_neff_tuning_phase=1000;%
 neff_tuning_start_phase=0;
@@ -83,7 +83,7 @@ neffb=neff(:,i)-delta(j);
 [Tup]=single_mrr_accurate(a,r,L,lambda,neffr);
 [Tbottom]=single_mrr_accurate(a,r,L,lambda,neffb);
 
-y_phase(j)=Tup.angle(izero_lambda0i(1))-Tbottom.angle(izero_lambda0i(1))-pi;
+y_phase(j)=Tup.angle(izero_lambda0i(1))-Tbottom.angle(izero_lambda0i(1))-3*pi/2;
 
 end
 
@@ -103,7 +103,7 @@ plot(lambda,(Tup.angle-Tbottom.angle)/pi);
 % % % % % % % % % % % % the target wave band % % % %  % % % % % % % % % % %
 %lambda0(1) was given in available_L.m to calculate the appropriate L
 
-lambda0=[lambda0(1);1.29780e-6;1.29893e-6;1.30005e-6;1.30118e-6;1.30231e-6;1.30345e-6;1.30458e-6];
+lambda0=[lambda0(1);1.29745e-6;1.29893e-6;1.30005e-6;1.30118e-6;1.30231e-6;1.30345e-6;1.30458e-6];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%  Calculate the rest wavelength channels %%%%%%%%%%%%%%%%%%%%%%
@@ -161,7 +161,7 @@ neff0(i)=neff0(i-1)+delta_neff0i;
 neff(:,i)=neff(:,i-1)+delta_neff0i;
 [izero_neff0i,all_neff0i,neff0i]=find_0_point(lambda,neff(:,i)-neff0(i));
 
-% % % % % % % % % % % % neff tuning to get pi % % % % % %  % % % % % % % %
+% % % % % % % % % % % % neff tuning to get 3*pi/2  % % % %  % % % % % % % %
 % % % % % % phase difference between up arm and bottom arm  % % % % % % % %
 
 %fit the dispersion of effective index to calculate the group index
@@ -183,7 +183,7 @@ neffb=neff(:,i)-delta(j);
 [Tup]=single_mrr_accurate(a,r,L,lambda,neffr);
 [Tbottom]=single_mrr_accurate(a,r,L,lambda,neffb);
 
-y_phase(j)=Tup.angle(izero_lambda0i(1))-Tbottom.angle(izero_lambda0i(1))-pi;
+y_phase(j)=Tup.angle(izero_lambda0i(1))-Tbottom.angle(izero_lambda0i(1))-3*pi/2;
 
 end
 
@@ -210,8 +210,8 @@ end
 for i=1:1:maxchannel
    
     
-    [T_cross_uparm]=single_mrr_accurate (a,r,L,lambda,neff(:,i));
-    [T_cross_bottomarm]=single_mrr_accurate (a,r,L,lambda,neff(:,i));
+    [T_cross_uparm]=single_mrr_accurate (a,r,L,lambda,neff(:,i)-delta_shift(i));
+    [T_cross_bottomarm]=single_mrr_accurate (a,r,L,lambda,neff(:,i)+delta_shift(i));
     
     [T_bar_uparm]=single_mrr_accurate (a,r,L,lambda,neff(:,i)+delta_shift(i));
     [T_bar_bottomarm]=single_mrr_accurate (a,r,L,lambda,neff(:,i)-delta_shift(i));
@@ -234,7 +234,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %all the switching state
-swich=dec2bin(linspace(0,2^maxchannel-1,2^maxchannel));
+% swich=dec2bin(linspace(0,2^maxchannel-1,2^maxchannel));
 
 % % % % % % % % % % initialization of intermediate variables % % %  % % % % 
 
@@ -251,11 +251,13 @@ MMI_matrix=[sqrt(2)/2,1i*sqrt(2)/2;1i*sqrt(2)/2,sqrt(2)/2;];
 switch_state_E_out=zeros(resolution,2);
 
 
-   swich='11111111'
+% 
+  
    for m=1:1:resolution % matrix initialization 
    MZI_matrix(:,:,m)=[1,0;0,1];
    end
    
+   swich='01111111'
 for i=1:1:resolution  %calculate for very lambda
      
      
@@ -272,18 +274,16 @@ for i=1:1:resolution  %calculate for very lambda
      MZI_matrix(:,:,i)=MZI_matrix(:,:,i)*[arm1(i),0;0,arm2(i)];
     end
    end
- E_out(i,:)=MMI_matrix*MZI_matrix(:,:,i)*[1,0;0,1]*MMI_matrix*E_in(i,:)';
+ E_out(i,:)=MMI_matrix*MZI_matrix(:,:,i)*[exp(1i*(pi/2)),0;0,1]*MMI_matrix*E_in(i,:)';
 
 end
  switch_state_E_out(:,:)= E_out(:,:);
  
 figure(123456781)
 % plot(lambda,10*log10(abs(switch_state_E_out(k,:,2).^2)))
-P13_1=abs(switch_state_E_out(:,1).^2);
-P14_1=abs(switch_state_E_out(:,2).^2);
-
-[ax, h1, h2]=plotyy(lambda,10*log10(P13_1),lambda,10*log10(P14_1));
-
+Tbar_13=10*log10(abs(switch_state_E_out(:,1).^2));
+Tbar_14=10*log10(abs(switch_state_E_out(:,2).^2));
+[ax, h1, h2]=plotyy(lambda,Tbar_13,lambda,Tbar_14);
 title('All in bar state','FontSize',15);
 xlabel('Wavelength [m]','FontSize',15);
 ylabel(ax(1),'Transmission [dB]','FontSize',15) % left y-axis 
@@ -296,16 +296,20 @@ set(h2,'color','r','linewidth',1);%
 set(ax(1),'ycolor','k','fontsize',14)%
 
 set(ax(2),'ycolor','r','fontsize',14)
-
-peaki=abs(switch_state_E_out(Ith(1),1)'.^2);
-[~,FWHMi]=find_peak_parameters(lambda,abs(switch_state_E_out(:,1).^2),lambda(Ith(1)));
+%  FWHMi=zeros(maxchannel);
+%  peaki=zeros(maxchannel);
+%    peaki=abs(switch_state_E_out(Ith(4),1)'.^2);
+[peaki,FWHMi]=find_peak_parameters(lambda,abs(switch_state_E_out(:,1).^2),lambda(Ith(1)));
+peaki
 bottom_4=abs(switch_state_E_out(Ith(1),2)'.^2);
 
-   swich='01111111'
-   for m=1:1:resolution % matrix initialization 
+
+
+ for m=1:1:resolution % matrix initialization 
    MZI_matrix(:,:,m)=[1,0;0,1];
-   end
+ end
    
+   swich='11111111'
 for i=1:1:resolution  %calculate for very lambda
      
      
@@ -322,18 +326,17 @@ for i=1:1:resolution  %calculate for very lambda
      MZI_matrix(:,:,i)=MZI_matrix(:,:,i)*[arm1(i),0;0,arm2(i)];
     end
    end
- E_out(i,:)=MMI_matrix*MZI_matrix(:,:,i)*[1,0;0,1]*MMI_matrix*E_in(i,:)';
+ E_out(i,:)=MMI_matrix*MZI_matrix(:,:,i)*[exp(1i*(pi/2)),0;0,1]*MMI_matrix*E_in(i,:)';
 
 end
  switch_state_E_out(:,:)= E_out(:,:);
  
 figure(123456782)
 % plot(lambda,10*log10(abs(switch_state_E_out(k,:,2).^2)))
-P13_2=abs(switch_state_E_out(:,1).^2);
-P14_2=abs(switch_state_E_out(:,2).^2);
+Tcross_13=10*log10(abs(switch_state_E_out(:,1).^2));
+Tcross_14=10*log10(abs(switch_state_E_out(:,2).^2));
 
-[ax, h1, h2]=plotyy(lambda,10*log10(P13_2),lambda,10*log10(P14_2));
-
+[ax, h1, h2]=plotyy(lambda,Tcross_13,lambda,Tcross_14);
 title('All in bar state','FontSize',15);
 xlabel('Wavelength [m]','FontSize',15);
 ylabel(ax(1),'Transmission [dB]','FontSize',15) % left y-axis 
@@ -346,13 +349,64 @@ set(h2,'color','r','linewidth',1);%
 set(ax(1),'ycolor','k','fontsize',14)%
 
 set(ax(2),'ycolor','r','fontsize',14)
-bottomi=abs(switch_state_E_out(Ith(1),1)'.^2);
+%  FWHMi=zeros(maxchannel);
+%  peaki=zeros(maxchannel);
+  bottomi=abs(switch_state_E_out(Ith(1),1)'.^2);
   ERER=peaki/bottomi;
 
 
 
+% for m=1:1:resolution % matrix initialization 
+%    MZI_matrix(:,:,m)=[1,0;0,1];
+%    end
+%    
+%    swich='11100000'
+% for i=1:1:resolution  %calculate for very lambda
+%      
+%      
+%    for j=1:1:maxchannel %calculate for very channel
+%        
+%     if (swich(j)=='1')
+%      arm1(i)=sqrt(Bar_up_armT(i,j)).*exp(1i.*(Bar_up_armangleT(i,j)));
+%      arm2(i)=sqrt(Bar_bottom_armT(i,j)).*exp(1i.*Bar_bottom_armangleT(i,j));
+%      MZI_matrix(:,:,i)=MZI_matrix(:,:,i)*[arm1(i),0;0,arm2(i)];
+%     end
+%     if (swich(j)=='0')
+%      arm1(i)=sqrt(Cross_up_armT(i,j)).*exp(1i.*(Cross_up_armangleT(i,j)));
+%      arm2(i)=sqrt(Cross_bottom_armT(i,j)).*exp(1i.*Cross_bottom_armangleT(i,j));
+%      MZI_matrix(:,:,i)=MZI_matrix(:,:,i)*[arm1(i),0;0,arm2(i)];
+%     end
+%    end
+%  E_out(i,:)=MMI_matrix*MZI_matrix(:,:,i)*[exp(1i*(pi/2)),0;0,1]*MMI_matrix*E_in(i,:)';
+% 
+% end
+%  switch_state_E_out(:,:)= E_out(:,:);
+%  
+% figure(123456782)
+% % plot(lambda,10*log10(abs(switch_state_E_out(k,:,2).^2)))
+% [ax, h1, h2]=plotyy(lambda,10*log10(abs(switch_state_E_out(:,1).^2)),lambda,10*log10(abs(switch_state_E_out(:,2).^2)));
+% title('All in bar state','FontSize',15);
+% xlabel('Wavelength [m]','FontSize',15);
+% ylabel(ax(1),'Transmission [dB]','FontSize',15) % left y-axis 
+% ylabel(ax(2),'Transmission [dB]','FontSize',15) % 
+% legend([h1,h2],'P1-P3','P1-P4');
+% set(h1,'color','k','linewidth',1);%
+% 
+% set(h2,'color','r','linewidth',1);%
+% 
+% set(ax(1),'ycolor','k','fontsize',14)%
+% 
+% set(ax(2),'ycolor','r','fontsize',14)
+% %  FWHMi=zeros(maxchannel);
+% %  peaki=zeros(maxchannel);
+%  
+% [peaki,FWHMi]=find_peak_parameters(lambda,abs(switch_state_E_out(:,2).^2),lambda(Ith(4)));
 
-%%%%%%%%%%% Calculate the ER for every wavelength channel %%%%%%%%%%%%%%%%%   
+
+
+
+% %%%%%%%%%%%%%%%%%%% Calculate the average ER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+% 
 % 
 % sum_3_on=zeros(8,resolution);
 % sum_3_off=zeros(8,resolution);
@@ -367,13 +421,13 @@ bottomi=abs(switch_state_E_out(Ith(1),1)'.^2);
 %     for k=1:1:2^maxchannel
 %         if (swich(k,j)=='1')
 %             sum_3_on(j,:)=abs(switch_state_E_out(k,:,1).^2)+sum_3_on(j,:);
-%              [peaki(k,j),FWHMi(k,j)]=find_peak_parameters(lambda,abs(switch_state_E_out(k,:,1)'.^2),lambda(Ith(j)));
+%              bottomi(k,j)=abs(switch_state_E_out(k,Ith(j),1)'.^2);
 %         end
 %   
 %         if (swich(k,j)=='0')
-%          
-%            sum_3_off(j,:)=abs(switch_state_E_out(k,:,1).^2)+sum_3_off(j,:);
-%            bottomi(k,j)=abs(switch_state_E_out(k,Ith(j),1)'.^2);
+%          [peaki(k,j),FWHMi(k,j)]=find_peak_parameters(lambda,abs(switch_state_E_out(k,:,1)'.^2),lambda(Ith(j)));
+%            sum_3_off(j,:)=abs(switch_state_E_out(k,:,1).^2)+sum_3_off(j,:);%ÓÐ·åÖµ
+%            
 %            
 %         end
 %     end
@@ -383,28 +437,13 @@ bottomi=abs(switch_state_E_out(Ith(1),1)'.^2);
 % 
 % for j=1:1:maxchannel
 %     for k=1:1:2^maxchannel
-%        if (swich(k,j)=='1')
-%            
+%        if (swich(k,j)=='0')
 %            k_binary=dec2bin(k-1,maxchannel)
-%            k_binary(j)='0';
+%            k_binary(j)='1';
 %            bin2dec(k_binary)
 %            ERER(k,j)=peaki(k,j)/bottomi( bin2dec(k_binary)+1,j);
-%            
-%         end
-%     end
-% 
-% end
-% 
-% 
-% 
-% for j=1:1:maxchannel
-%     for k=1:1:2^maxchannel
-%         if (swich(k,j)=='1')
-%             sum_4_on(j,:)=abs(switch_state_E_out(k,:,2).^2)+sum_4_on(j,:);
-%         end
-%   
-%         if (swich(k,j)=='0')
-%            sum_4_off(j,:)=abs(switch_state_E_out(k,:,2).^2)+sum_4_off(j,:);
+%           
+%       
 %         end
 %     end
 % 
@@ -440,9 +479,9 @@ bottomi=abs(switch_state_E_out(Ith(1),1)'.^2);
 % for i=1:1:maxchannel
 %     i
 %     figure(12034+i)
-% findpeaks(sum_3_on(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9);
-% % [pks_bar(i),locs_bar(i),widths_bar(i),proms_bar(i)] = findpeaks(sum_3_on(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.2);
+% findpeaks(sum_3_off(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.5);
+% [pks_bar(i),locs_bar(i),widths_bar(i),proms_bar(i)] = findpeaks(sum_3_off(i,1020:8300)/2^(maxchannel-1),lambda,'MinPeakDistance',1.1e-9,'MinPeakHeight',0.5);
 % end
-
+% 
 
 
